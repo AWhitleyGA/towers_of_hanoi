@@ -1,0 +1,105 @@
+body {
+
+}
+div.container {
+  width: 1200px;
+  height: 600px;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  width: 70%;
+  height: 100%;
+  background: gold;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+div.moves {
+  width: 100%;
+  height: 15%;
+  background: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+aside {
+  width: 30%;
+  height: 100%;
+  background: pink;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;;
+  align-items: center;
+}
+section.game-card {
+  width: 90%;
+  height: 50%;
+  margin-top: 30px;
+  border-radius: 20px;
+  background: grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+div.timer {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 4px solid black;
+}
+div.time-goals {
+  width: 100%;
+  height: 30%;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+div.medal  span{
+  width: 1.5em;
+  height: 1.5em;
+  /*background: black;*/
+  display: inline-block;
+  border-radius: 1em;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+div.medal p {
+  display: inline;
+  vertical-align: middle;
+}
+span.gold {
+  background: gold;
+}
+span.silver {
+  background: silver;
+}
+span.bronze {
+  background: orange;
+}
+section.banner {
+  width: 90%;
+  height: 30%;
+  margin-top: 30px;
+  border-radius: 20px;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section.banner h1 {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
