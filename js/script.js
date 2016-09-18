@@ -16,12 +16,12 @@ var poleOne = [],
 
 var poleIsSelected = false;
 
-var sourcePole;
-var destinationPole;
-var sourceMin;
-var desinationMin;
-var sourceArray;
-var destinationArray;
+var sourcePole,
+    destinationPole,
+    sourceMin,
+    desinationMin,
+    sourceArray,
+    destinationArray;
 
 
 var towers = {
@@ -64,8 +64,63 @@ var towers = {
       console.log("against rules");
     };
   },
-  moveDisk : function() {
+  moveDisk : function(sourceArray, destinationArray) {
     console.log("initiate");
+    destinationArray.unshift(sourceArray.shift());
+    $(sourcePole).html('');
+    $(destinationPole).html('');
+    this.generateDisks(destinationArray);
+    this.generateDisks(sourceArray);
+  },
+  generateDisks : function(array) {
+    console.log("generate");
+    console.log(array);
+    for (i = 0; i < array.length; i++) {
+      var newDisk;
+      newDisk = $('<div></div>').addClass('disk');
+      switch (array[i]) {
+        case 1 :
+          newDisk.addClass('size-one');
+          break;
+        case 2 :
+          newDisk.addClass('size-two');
+          break;
+        case 3 :
+          newDisk.addClass('size-three');
+          break;
+        case 4 :
+          newDisk.addClass('size-four');
+          break;
+        case 5 :
+          newDisk.addClass('size-five');
+          break;
+      };
+      switch(i) {
+        case 0 :
+          newDisk.addClass('level-five');
+          break;
+        case 1 :
+          newDisk.addClass('level-four');
+          break;
+        case 2 :
+          newDisk.addClass('level-three');
+          break;
+        case 3 :
+          newDisk.addClass('level-two');
+          break;
+        case 4 :
+          newDisk.addClass('level-one');
+          break;
+      };
+      console.log(newDisk);
+      if (array == sourceArray) {
+        console.log('source array');
+        $(sourcePole).prepend(newDisk);
+      } else {
+        console.log('destination array');
+        $(destinationPole).prepend(newDisk);
+      }
+    };
   },
   checkForWin : function() {
 
@@ -75,7 +130,7 @@ var towers = {
 poles.on('click', function() {
   var pole = this;
   if (poleIsSelected == true) {
-    towers.checkRules(pole);
+    towers.setDestinationPole(pole);
   } else {
     towers.setSourcePole(pole);
   }
