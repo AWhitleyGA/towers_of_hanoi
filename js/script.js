@@ -75,9 +75,26 @@ var towers = {
   generateDisks : function(array) {
     console.log("generate");
     console.log(array);
-    for (i = 0; i < array.length; i++) {
+    for (i = array.length-1; i >= 0 ; i--) {
       var newDisk;
       newDisk = $('<div></div>').addClass('disk');
+      switch(i) {
+        case (array.length-1) :
+          newDisk.addClass('level-five');
+          break;
+        case (array.length-2) :
+          newDisk.addClass('level-four');
+          break;
+        case (array.length-3) :
+          newDisk.addClass('level-three');
+          break;
+        case (array.length-4) :
+          newDisk.addClass('level-two');
+          break;
+        case (array.length-5) :
+          newDisk.addClass('level-one');
+          break;
+      };
       switch (array[i]) {
         case 1 :
           newDisk.addClass('size-one');
@@ -95,30 +112,16 @@ var towers = {
           newDisk.addClass('size-five');
           break;
       };
-      switch(i) {
-        case 0 :
-          newDisk.addClass('level-five');
-          break;
-        case 1 :
-          newDisk.addClass('level-four');
-          break;
-        case 2 :
-          newDisk.addClass('level-three');
-          break;
-        case 3 :
-          newDisk.addClass('level-two');
-          break;
-        case 4 :
-          newDisk.addClass('level-one');
-          break;
-      };
+
+
+
       console.log(newDisk);
       if (array == sourceArray) {
         console.log('source array');
-        $(sourcePole).prepend(newDisk);
+        $(sourcePole).append(newDisk);
       } else {
         console.log('destination array');
-        $(destinationPole).prepend(newDisk);
+        $(destinationPole).append(newDisk);
       }
     };
   },
