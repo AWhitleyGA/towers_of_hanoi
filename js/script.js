@@ -112,9 +112,6 @@ var towers = {
           newDisk.addClass('size-five');
           break;
       };
-
-
-
       console.log(newDisk);
       if (array == sourceArray) {
         console.log('source array');
@@ -124,9 +121,12 @@ var towers = {
         $(destinationPole).append(newDisk);
       }
     };
+    this.checkForWin();
   },
   checkForWin : function() {
-
+    if (poleOne.length == 5 || poleThree.length == 5) {
+      alert('Congratulations! You have won.');
+    }
   }
 };
 
