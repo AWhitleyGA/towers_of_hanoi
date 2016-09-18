@@ -67,8 +67,8 @@ var towers = {
   moveDisk : function(sourceArray, destinationArray) {
     console.log("initiate");
     destinationArray.unshift(sourceArray.shift());
-    $(sourcePole).html('');
-    $(destinationPole).html('');
+    $(sourcePole).html('').append('<div class="stem"></div>');
+    $(destinationPole).html('').append('<div class="stem"></div>');
     this.generateDisks(destinationArray);
     this.generateDisks(sourceArray);
   },
