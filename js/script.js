@@ -3,7 +3,8 @@ var poles = $('div.pole');
     poleTwoDisplay = $('#pole-two'),
     poleThreeDisplay = $('#pole-three'),
     disks = $('div.disk'),
-    startButton = $('button.play');
+    startButton = $('button.play'),
+    starterPoleDisplay = '';
 
 
 var poleOne = [],
@@ -21,6 +22,7 @@ var sourcePole,
     destinationPole,
     sourceMin,
     desinationMin,
+    starterArray,
     sourceArray,
     destinationArray;
 
@@ -28,6 +30,13 @@ var sourcePole,
 var towers = {
   beginGame : function() {
     $('div.notification').fadeOut(600);
+    poleOne = [];
+    poleTwo = [1, 2, 3, 4, 5];
+    poleThree = [];
+    starterArray = poleTwo;
+    starterPoleDisplay = $('#pole-two');
+    $('div.pole').html('<div class="stem"></div>');
+    towers.generateDisks(starterArray);
   },
   setSourcePole : function(pole) {
     sourcePole = pole;
@@ -118,15 +127,20 @@ var towers = {
           break;
       };
       console.log(newDisk);
-      if (array == sourceArray) {
+      if (array == starterArray) {
+        console.log('starter array');
+        $(starterPoleDisplay).append(newDisk);
+      } else if (array == sourceArray) {
         console.log('source array');
         $(sourcePole).append(newDisk);
+        this.checkForWin();
       } else {
         console.log('destination array');
         $(destinationPole).append(newDisk);
+        this.checkForWin();
       };
     };
-    this.checkForWin();
+
   },
   checkForWin : function() {
     if (poleOne.length == 5 || poleThree.length == 5) {
