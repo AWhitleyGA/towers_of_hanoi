@@ -94,6 +94,9 @@ var towers = {
       case 4 :
         $(ghostDisk).css('bottom', '45%');
         break;
+      case 5 :
+        $(ghostDisk).css('bottom', '60%');
+        break;
     };
     $(ghostDisk).html('');
     $(ghostDisk).css('opacity', '0.3');
