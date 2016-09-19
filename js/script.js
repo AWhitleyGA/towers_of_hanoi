@@ -77,8 +77,27 @@ var towers = {
       console.log("against rules");
     };
   },
-  placeGhostDisk : function() {
-    ghostDisk = $(sourcePole).children('.disk').last();
+  placeGhostDisk : function(ghostPole) {
+    var ghostDisk = $(sourcePole).children('.disk').last().clone();
+    $(ghostDisk).attr('id', 'ghost');
+    var ghostLevel = $(ghostPole).children().length;
+    switch (ghostLevel) {
+      case 1 :
+        $(ghostDisk).css('bottom', '0%');
+        break;
+      case 2 :
+        $(ghostDisk).css('bottom', '15%');
+        break;
+      case 3 :
+        $(ghostDisk).css('bottom', '30%');
+        break;
+      case 4 :
+        $(ghostDisk).css('bottom', '45%');
+        break;
+    };
+    $(ghostDisk).html('');
+    $(ghostDisk).css('opacity', '0.3');
+    $(ghostPole).prepend(ghostDisk);
   },
   moveDisk : function(sourceArray, destinationArray) {
     console.log("initiate");
@@ -176,6 +195,8 @@ poles.hover(function() {
   if ($(this).children('.disk').last().hasClass('selected') == false) {
     $(this).children('.disk').last().find('div.pointer').hide();
     console.log('hide');
-  }
+
+  };
+    $(this).find('#ghost').remove();
 });
 startButton.on('click', towers.beginGame);
