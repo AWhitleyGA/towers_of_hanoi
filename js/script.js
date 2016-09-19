@@ -184,6 +184,7 @@ var towers = {
       $('div.notification').fadeIn(600);
       $('div.notification-text').html('Finished!');
       $('button.play').text('Play Again');
+      towers.timer();
     }
   }
 };
