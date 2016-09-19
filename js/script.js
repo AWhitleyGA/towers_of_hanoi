@@ -1,8 +1,9 @@
 var poles = $('div.pole');
     poleOneDisplay = $('#pole-one'),
     poleTwoDisplay = $('#pole-two'),
-    poleThreeDisplay = $('#pole-three');
-    disks = $('div.disk');
+    poleThreeDisplay = $('#pole-three'),
+    disks = $('div.disk'),
+    startButton = $('button.play');
 
 
 var poleOne = [],
@@ -25,6 +26,9 @@ var sourcePole,
 
 
 var towers = {
+  beginGame : function() {
+    $('div.notification').fadeOut(600);
+  },
   setSourcePole : function(pole) {
     sourcePole = pole;
   },
@@ -139,3 +143,4 @@ poles.on('click', function() {
   }
   poleIsSelected = !poleIsSelected;
 });
+startButton.on('click', towers.beginGame);
