@@ -5,6 +5,7 @@ var poles = $('div.pole');
     disks = $('div.disk'),
     startButton = $('button.play'),
     starterPoleDisplay = '';
+    timerDisplay = $('div.timer p');
 
 
 var poleOne = [],
@@ -16,7 +17,11 @@ var poleOne = [],
     diskFour = 4,
     diskFive = 5;
 
-var poleIsSelected = false;
+var poleIsSelected = false,
+    timerOn = false,
+    time = 0,
+    timeInMinutes,
+    timerId;
 
 var sourcePole,
     destinationPole,
@@ -71,10 +76,9 @@ var towers = {
     destinationMin = Math.min.apply(Math,destinationArray);
     sourceMin = Math.min.apply(Math,sourceArray);
     if (sourceMin < destinationMin) {
-      console.log("move disk");
       this.moveDisk(sourceArray, destinationArray);
     } else {
-      console.log("against rules");
+      console.log('against rules');
     };
   },
   placeGhostDisk : function(ghostPole) {
@@ -103,7 +107,6 @@ var towers = {
     $(ghostPole).prepend(ghostDisk);
   },
   moveDisk : function(sourceArray, destinationArray) {
-    console.log("initiate");
     destinationArray.unshift(sourceArray.shift());
     $(sourcePole).html('').append('<div class="stem"></div>');
     $(destinationPole).html('').append('<div class="stem"></div>');
@@ -111,8 +114,6 @@ var towers = {
     this.generateDisks(sourceArray);
   },
   generateDisks : function(array) {
-    console.log("generate");
-    console.log(array);
     var disksGenerated;
     for (i = array.length-1; i >= 0 ; i--) {
       var newDisk;
@@ -151,21 +152,32 @@ var towers = {
           newDisk.addClass('size-five');
           break;
       };
-      console.log(newDisk);
       if (array == starterArray) {
-        console.log('starter array');
         $(starterPoleDisplay).append(newDisk);
       } else if (array == sourceArray) {
-        console.log('source array');
         $(sourcePole).append(newDisk);
         this.checkForWin();
       } else {
-        console.log('destination array');
         $(destinationPole).append(newDisk);
         this.checkForWin();
       };
     };
-
+  },
+  timer : function() {
+    timerOn = !timerOn;
+    if (timerOn == true) {
+        timerId = setInterval(function() {
+        time += 1;
+        var h = Math.floor(time / 3600);
+        var m = Math.floor(time % 3600 / 60);
+        var s = Math.floor(time % 3600 % 60);
+        timeInMinutes = ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
+        timerDisplay.text(timeInMinutes);
+        console.log('timerlog');
+      }, 1000);
+    } else {
+      clearInterval(timerId);
+    }
   },
   checkForWin : function() {
     if (poleOne.length == 5 || poleThree.length == 5) {
@@ -175,7 +187,6 @@ var towers = {
     }
   }
 };
-
 poles.on('click', function() {
   var pole = this;
   if (poleIsSelected == true) {
@@ -190,16 +201,16 @@ poles.on('click', function() {
 poles.hover(function() {
   if (poleIsSelected == false) {
     $(this).children('.disk').last().find('div.pointer').show();
-    console.log(this);
   } else if (this != sourcePole) {
     towers.placeGhostDisk(this);
   }
 }, function() {
   if ($(this).children('.disk').last().hasClass('selected') == false) {
     $(this).children('.disk').last().find('div.pointer').hide();
-    console.log('hide');
-
   };
     $(this).find('#ghost').remove();
 });
-startButton.on('click', towers.beginGame);
+startButton.on('click', function() {
+  towers.timer();
+  towers.beginGame();
+});
