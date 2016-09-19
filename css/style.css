@@ -19,7 +19,7 @@ div.notification {
  display: flex;
  justify-content: flex-end;
  align-items: flex-start;
- display: none;
+ /*display: none;*/
 }
 div.notification-text {
   width: 60%;
