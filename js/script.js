@@ -79,6 +79,7 @@ var towers = {
   generateDisks : function(array) {
     console.log("generate");
     console.log(array);
+    var disksGenerated;
     for (i = array.length-1; i >= 0 ; i--) {
       var newDisk;
       newDisk = $('<div></div>').addClass('disk');
@@ -123,13 +124,15 @@ var towers = {
       } else {
         console.log('destination array');
         $(destinationPole).append(newDisk);
-      }
+      };
     };
     this.checkForWin();
   },
   checkForWin : function() {
     if (poleOne.length == 5 || poleThree.length == 5) {
-      alert('Congratulations! You have won.');
+      $('div.notification').fadeIn(600);
+      $('div.notification-text').html('Finished!');
+      $('button.play').text('Play Again');
     }
   }
 };
