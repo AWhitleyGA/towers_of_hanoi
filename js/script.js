@@ -157,14 +157,20 @@ poles.on('click', function() {
     towers.setDestinationPole(pole);
   } else {
     towers.setSourcePole(pole);
+    $(this).children('.disk').last().addClass('selected');
+    $(this).children('.disk').last().find('div.pointer').show();
   }
   poleIsSelected = !poleIsSelected;
 });
 poles.hover(function() {
-  $(this).children('.disk').last().find('div.pointer').show();
-  console.log(this);
+  if (poleIsSelected == false) {
+    $(this).children('.disk').last().find('div.pointer').show();
+    console.log(this);
+  }
 }, function() {
-  $(this).children('.disk').last().find('div.pointer').hide();
-  console.log('hide');
+  if ($(this).children('.disk').last().hasClass('selected') == false) {
+    $(this).children('.disk').last().find('div.pointer').hide();
+    console.log('hide');
+  }
 });
 startButton.on('click', towers.beginGame);
