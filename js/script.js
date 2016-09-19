@@ -91,7 +91,7 @@ var towers = {
     var disksGenerated;
     for (i = array.length-1; i >= 0 ; i--) {
       var newDisk;
-      newDisk = $('<div><div class="pointer"></div></div>').addClass('disk');
+      newDisk = $('<div><div class="pointer"><img class="selector-left" src="images/selector-icon.svg"><img class="selector-right" src="images/selector-icon.svg"></div></div>').addClass('disk');
       switch(i) {
         case (array.length-1) :
           newDisk.addClass('level-five');
@@ -159,5 +159,12 @@ poles.on('click', function() {
     towers.setSourcePole(pole);
   }
   poleIsSelected = !poleIsSelected;
+});
+poles.hover(function() {
+  $(this).children('.disk').last().find('div.pointer').show();
+  console.log(this);
+}, function() {
+  $(this).children('.disk').last().find('div.pointer').hide();
+  console.log('hide');
 });
 startButton.on('click', towers.beginGame);
