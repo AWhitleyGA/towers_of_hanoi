@@ -19,6 +19,7 @@ div.notification {
  display: flex;
  justify-content: flex-end;
  align-items: flex-start;
+ display: none;
 }
 div.notification-text {
   width: 60%;
@@ -84,6 +85,29 @@ div.disk {
   background-repeat: repeat;
   background-position: center;
   position: absolute;
+}
+div.pointer {
+  position: absolute;
+  top: 0;
+  /*left: -20%;*/
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+img.selector-left {
+  height: 50%;
+  position: absolute;
+  bottom: 25%;
+  left: -30px;
+  transform: rotate(270deg);
+}
+img.selector-right {
+  height: 50%;
+  position: absolute;
+  bottom: 25%;
+  right: -30px;
+  transform: rotate(90deg);
 }
 /*Classes defining disk position on poles (could be replaced in JS)*/
 div.level-one {

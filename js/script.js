@@ -91,7 +91,7 @@ var towers = {
     var disksGenerated;
     for (i = array.length-1; i >= 0 ; i--) {
       var newDisk;
-      newDisk = $('<div></div>').addClass('disk');
+      newDisk = $('<div><div class="pointer"></div></div>').addClass('disk');
       switch(i) {
         case (array.length-1) :
           newDisk.addClass('level-five');
