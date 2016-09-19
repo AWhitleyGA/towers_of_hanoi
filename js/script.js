@@ -77,6 +77,9 @@ var towers = {
       console.log("against rules");
     };
   },
+  placeGhostDisk : function() {
+    ghostDisk = $(sourcePole).children('.disk').last();
+  },
   moveDisk : function(sourceArray, destinationArray) {
     console.log("initiate");
     destinationArray.unshift(sourceArray.shift());
@@ -166,6 +169,8 @@ poles.hover(function() {
   if (poleIsSelected == false) {
     $(this).children('.disk').last().find('div.pointer').show();
     console.log(this);
+  } else if (this != sourcePole) {
+    towers.placeGhostDisk(this);
   }
 }, function() {
   if ($(this).children('.disk').last().hasClass('selected') == false) {
