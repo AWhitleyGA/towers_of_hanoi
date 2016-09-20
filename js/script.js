@@ -1,4 +1,4 @@
-var poles = $('div.pole');
+var poles = $('div.pole'),
     poleOneDisplay = $('#pole-one'),
     poleTwoDisplay = $('#pole-two'),
     poleThreeDisplay = $('#pole-three'),
@@ -20,6 +20,7 @@ var poleOne = [],
 var poleIsSelected = false,
     timerOn = false,
     time = 0,
+    moves = 0,
     timeInMinutes,
     timerId;
 
@@ -41,6 +42,7 @@ var towers = {
     starterArray = poleTwo;
     starterPoleDisplay = $('#pole-two');
     $('div.pole').html('<div class="stem"></div>');
+    moves = 0;
     towers.generateDisks(starterArray);
   },
   setSourcePole : function(pole) {
@@ -110,8 +112,11 @@ var towers = {
     destinationArray.unshift(sourceArray.shift());
     $(sourcePole).html('').append('<div class="stem"></div>');
     $(destinationPole).html('').append('<div class="stem"></div>');
+    moves += 1;
+    $('.moves p').text('Moves: '+moves);
     this.generateDisks(destinationArray);
     this.generateDisks(sourceArray);
+    this.checkForWin();
   },
   generateDisks : function(array) {
     var disksGenerated;
@@ -156,10 +161,8 @@ var towers = {
         $(starterPoleDisplay).append(newDisk);
       } else if (array == sourceArray) {
         $(sourcePole).append(newDisk);
-        this.checkForWin();
       } else {
         $(destinationPole).append(newDisk);
-        this.checkForWin();
       };
     };
   },
@@ -181,10 +184,25 @@ var towers = {
   },
   checkForWin : function() {
     if (poleOne.length == 5 || poleThree.length == 5) {
+      $('div.notification').find('div.notification-message').remove();
+      $('div.notification').find('div.instructions').remove();      
       $('div.notification').fadeIn(600);
       $('div.notification-text').html('Finished!');
       $('button.play').text('Play Again');
+      var medal;
+      if(time <= 60) {
+        medal = "gold";
+      } else if (time <= 120) {
+        medal = "silver";
+      } else if (time <= 180) {
+        medal = "bronze";
+      } else {
+        medal = "none";
+      };
+      message = $('<div class="notification-message"><img src="images/'+medal+'-medal.png"></div>');
+      $('div.notification').append(message);
       towers.timer();
+      time = 0;
     }
   }
 };

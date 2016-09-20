@@ -21,6 +21,16 @@ div.notification {
  align-items: flex-start;
  /*display: none;*/
 }
+div.instructions {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 60%;
+  text-align: center;
+}
+div.instructions h2 {
+  margin: 5%;
+}
 div.notification-text {
   width: 60%;
   height: 10%;
@@ -28,6 +38,15 @@ div.notification-text {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+div.notification-message {
+  position: absolute;
+  width: 20%;
+  top: 20%;
+  left: 40%;
+}
+div.notification-message img {
+  width: 100%;
 }
 button.play {
   width: 20%;
