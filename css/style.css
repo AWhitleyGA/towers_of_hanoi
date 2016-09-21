@@ -1,5 +1,10 @@
-body {
-
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /*background: #FFF;*/
 }
 div.container {
   width: 1200px;
@@ -41,18 +46,20 @@ div.notification-text {
 }
 div.notification-message {
   position: absolute;
-  width: 20%;
+  width: 30%;
   top: 20%;
-  left: 40%;
+  left: 35%;
+  text-align: center;
 }
 div.notification-message img {
-  width: 100%;
+  width: 90%;
 }
 button.play {
   width: 20%;
   height: 10%;
   background: gold;
   border-radius: 20px;
+  z-index: 3;
 }
 main {
   width: 85%;
@@ -111,7 +118,7 @@ div.pointer {
   /*left: -20%;*/
   height: 100%;
   width: 100%;
-  z-index: 1;
+  button: 1;
   display: none;
 }
 img.selector-left {
@@ -245,4 +252,15 @@ section.banner h1 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+
+canvas {
+  display: none;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:1;
 }
