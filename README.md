@@ -1,7 +1,7 @@
 # towers_of_hanoi
 *by Andrew Whitley*
 
-##Technologies Used
+## Technologies Used
 
 * Javascript
 * CSS
@@ -42,6 +42,6 @@
 1. Navigate to your forked repository
 1. Clone your forked repository and copy the provided SSH or HTTP code provided
 1. Open your command line (terminal) on your computer and navigate to the desired storage location
-1. Type in 'git clone' following by the SSH or HTTP key copied from GitHub
-  *  Example 'git clone git@github.com:ga-wdi-exercises/project1.git'
-1. Open the cloned repository and open the page by typing 'open index.html' into the command line
+1. Type in `git clone` following by the SSH or HTTP key copied from GitHub
+  *  Example `git clone git@github.com:ga-wdi-exercises/project1.git`
+1. Open the cloned repository and open the page by typing `open index.html` into the command line
