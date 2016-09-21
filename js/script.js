@@ -81,6 +81,9 @@ var towers = {
       this.moveDisk(sourceArray, destinationArray);
     } else {
       console.log('against rules');
+      $(sourcePole).children('.disk').find('div.pointer').hide();
+      $(sourcePole).children('.disk').last().removeClass('selected');
+      $(destinationPole).find('#ghost').remove();
     };
   },
   placeGhostDisk : function(ghostPole) {
@@ -185,7 +188,7 @@ var towers = {
   checkForWin : function() {
     if (poleOne.length == 5 || poleThree.length == 5) {
       $('div.notification').find('div.notification-message').remove();
-      $('div.notification').find('div.instructions').remove();      
+      $('div.notification').find('div.instructions').remove();
       $('div.notification').fadeIn(600);
       $('div.notification-text').html('Finished!');
       $('button.play').text('Play Again');
@@ -217,18 +220,21 @@ poles.on('click', function() {
   }
   poleIsSelected = !poleIsSelected;
 });
-poles.hover(function() {
+poles.mouseenter(function() {
   if (poleIsSelected == false) {
     $(this).children('.disk').last().find('div.pointer').show();
   } else if (this != sourcePole) {
     towers.placeGhostDisk(this);
   }
-}, function() {
+})
+
+poles.mouseleave(function() {
   if ($(this).children('.disk').last().hasClass('selected') == false) {
     $(this).children('.disk').last().find('div.pointer').hide();
   };
     $(this).find('#ghost').remove();
 });
+
 startButton.on('click', function() {
   towers.timer();
   towers.beginGame();
