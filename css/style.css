@@ -43,6 +43,9 @@ div.instructions {
 div.instructions h2 {
   margin: 5%;
 }
+div.instructions p {
+  margin: 2% 0;
+}
 div.notification-text {
   width: 60%;
   height: 10%;
