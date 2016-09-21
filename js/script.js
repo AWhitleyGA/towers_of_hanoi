@@ -1,3 +1,4 @@
+//variables to link html to javascript variable for use later
 var poles = $('div.pole'),
     poleOneDisplay = $('#pole-one'),
     poleTwoDisplay = $('#pole-two'),
@@ -7,15 +8,12 @@ var poles = $('div.pole'),
     starterPoleDisplay = '';
     timerDisplay = $('div.timer p');
 
+//arrays to track which poles have which disks throughout the game
 var poleOne = [],
     poleTwo = [1, 2, 3, 4, 5],
-    poleThree = [],
-    diskOne = 1,
-    diskTwo = 2,
-    diskThree = 3,
-    diskFour = 4,
-    diskFive = 5;
+    poleThree = [];
 
+//variables to manipulate during game execution to be tested conditionally in later parts
 var poleIsSelected = false,
     timerOn = false,
     time = 0,
@@ -23,6 +21,7 @@ var poleIsSelected = false,
     timeInMinutes,
     timerId;
 
+//globally declared variables to allow for easy identification by all functions (makes scope easy)
 var sourcePole,
     destinationPole,
     sourceMin,
@@ -31,8 +30,9 @@ var sourcePole,
     sourceArray,
     destinationArray;
 
-
+//towers object containing all core functionality
 var towers = {
+  //function that resets the poles and tracker variables to default start state
   beginGame : function() {
     $('div.notification').fadeOut(600);
     poleOne = [];
@@ -45,14 +45,18 @@ var towers = {
     moves = 0;
     towers.generateDisks(starterArray);
   },
+  //triggered on pole clicks, sets which pole to move disk FROM
   setSourcePole : function(pole) {
     sourcePole = pole;
   },
+  //triggered on pole clicks, sets which pole to deliver disk TO
   setDestinationPole : function(pole) {
     destinationPole = pole;
-    this.checkRules(destinationPole);
+    this.checkRules(destinationPole); //initiate next stage
   },
+  //triggered by click on destination pole; checks if move is allowed and initiates move if allowed
   checkRules : function(destinationPole) {
+    //what pole is disk being removed from
     switch ($(sourcePole).attr('id')) {
       case 'pole-one' :
         sourceArray = poleOne;
@@ -64,6 +68,7 @@ var towers = {
         sourceArray = poleThree;
         break;
     };
+    //what pole is disk being added to
     switch ($(destinationPole).attr('id')) {
       case 'pole-one' :
       destinationArray = poleOne;
@@ -75,22 +80,23 @@ var towers = {
       destinationArray = poleThree;
         break;
     };
+    // RULES - is the move from source pole to destination pole allowed
     destinationMin = Math.min.apply(Math,destinationArray);
     sourceMin = Math.min.apply(Math,sourceArray);
     if (sourceMin < destinationMin) {
-      this.moveDisk(sourceArray, destinationArray);
-    } else {
-      console.log('against rules');
+      this.moveDisk(sourceArray, destinationArray); //if so, initiate the move
+    } else {  //otherwise do nothing but reset the UI disk selectors
       $(sourcePole).children('.disk').find('div.pointer').hide();
       $(sourcePole).children('.disk').last().removeClass('selected');
       $(destinationPole).find('#ghost').remove();
     };
   },
+  //controls where to place the ghost(preview) disks when hovering over potential destination poles
   placeGhostDisk : function(ghostPole) {
     var ghostDisk = $(sourcePole).children('.disk').last().clone();
     $(ghostDisk).attr('id', 'ghost');
     var ghostLevel = $(ghostPole).children().length;
-    switch (ghostLevel) {
+    switch (ghostLevel) {   //determines ghostDisk position (where the disk would potentially be placed)
       case 1 :
         $(ghostDisk).css('bottom', '0%');
         break;
@@ -107,26 +113,28 @@ var towers = {
         $(ghostDisk).css('bottom', '60%');
         break;
     };
-    $(ghostDisk).html('');
+    $(ghostDisk).html(''); //deactivates selector icons for ghostDisks
     $(ghostDisk).css('opacity', '0.3');
     $(ghostPole).prepend(ghostDisk);
   },
+  //Function to handle internal logic of moving a disks (between the ARRAYS for each pole) and to trigger regeneration of arrays after moves AND check for win conditions
   moveDisk : function(sourceArray, destinationArray) {
     destinationArray.unshift(sourceArray.shift());
     $(sourcePole).html('').append('<div class="stem"></div>');
     $(destinationPole).html('').append('<div class="stem"></div>');
-    moves += 1;
+    moves += 1; //increments global move counter
     $('.moves p').text('Moves: '+moves);
-    this.generateDisks(destinationArray);
-    this.generateDisks(sourceArray);
-    this.checkForWin();
+    this.generateDisks(destinationArray); //regenerate destination pole with new disks
+    this.generateDisks(sourceArray); //regenerate source pole with new disks
+    this.checkForWin(); //check to see if user has won the game (all disks on new pole)
   },
+  //Function to generate and display the disks for a given pole based on the array passed in
   generateDisks : function(array) {
     var disksGenerated;
     for (i = array.length-1; i >= 0 ; i--) {
-      var newDisk;
+      var newDisk;  //creates a new html element representing a disk
       newDisk = $('<div><div class="pointer"><img class="selector-left" src="images/selector-icon.svg"><img class="selector-right" src="images/selector-icon.svg"></div></div>').addClass('disk');
-      switch(i) {
+      switch(i) {   //checks to see what level (height from base) the disk should be based on the array value's INDEX
         case (array.length-1) :
           newDisk.addClass('level-five');
           break;
@@ -143,7 +151,7 @@ var towers = {
           newDisk.addClass('level-one');
           break;
       };
-      switch (array[i]) {
+      switch (array[i]) { //checks to see how wide a disk should be based on the array value VALUE (number value)
         case 1 :
           newDisk.addClass('size-one');
           break;
@@ -160,6 +168,7 @@ var towers = {
           newDisk.addClass('size-five');
           break;
       };
+      //conditional to test where the newly generated disk should go (tests what array was passed into the function)
       if (array == starterArray) {
         $(starterPoleDisplay).append(newDisk);
       } else if (array == sourceArray) {
@@ -169,6 +178,7 @@ var towers = {
       };
     };
   },
+  //Function to keep track of time in the game and display time to the UI; is triggered by the START button, deactivated when game is won
   timer : function() {
     timerOn = !timerOn;
     if (timerOn == true) {
@@ -185,14 +195,16 @@ var towers = {
       clearInterval(timerId);
     }
   },
+  //Fuction to check if user has successfully moved all disks to a new pole, is triggered by moveDisk
   checkForWin : function() {
     if (poleOne.length == 5 || poleThree.length == 5) {
+      //Upon win, present the following html using the 'notification' div that was faded out at start of game
       $('div.notification').find('div.notification-message').remove();
       $('div.notification').find('div.instructions').remove();
       $('div.notification').fadeIn(600);
       $('div.notification-text').html('Finished!');
       $('button.play').text('Play Again');
-      var medal;
+      var medal; //creates new variable to determine if user qualified for a 'medal' based on their times
       if(time <= 60) {
         medal = "gold";
         message = $('<div class="notification-message"><img src="images/'+medal+'-medal.png"></div>');
@@ -206,7 +218,7 @@ var towers = {
         message = $('<div class="notification-message"></div>');
       };
       $('div.notification').append(message);
-      if (time <= 180) {
+      if (time <= 180) { //if user got medal, queue the confetti!!!
         $('canvas').show();
       };
       towers.timer();
@@ -214,6 +226,7 @@ var towers = {
     }
   }
 };
+//event listener for any clicks on poles that triggers pole selection functions and sets UI selector icon
 poles.on('click', function() {
   var pole = this;
   if (poleIsSelected == true) {
@@ -225,6 +238,8 @@ poles.on('click', function() {
   }
   poleIsSelected = !poleIsSelected;
 });
+
+//event listener for mousing over poles that indicates which disk would be selected (triggers placeGhostDisk)
 poles.mouseenter(function() {
   if (poleIsSelected == false) {
     $(this).children('.disk').last().find('div.pointer').show();
@@ -233,6 +248,7 @@ poles.mouseenter(function() {
   }
 })
 
+//event listener for mousing out of poles that removes previously placed ghost disks
 poles.mouseleave(function() {
   if ($(this).children('.disk').last().hasClass('selected') == false) {
     $(this).children('.disk').last().find('div.pointer').hide();
@@ -240,6 +256,7 @@ poles.mouseleave(function() {
     $(this).find('#ghost').remove();
 });
 
+//event listener linked to start button that resets the timer and triggers the beginGame sequence
 startButton.on('click', function() {
   towers.timer();
   towers.beginGame();
@@ -248,26 +265,9 @@ startButton.on('click', function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//CODE BORROWED FROM CODEPEN THAT ANIMATES THE CONFETTI WHEN USER EARNS MEDAL
+//CREATED BY HEMN CHOWRAKA
+//SOURCE : https://iprodev.com/confetti-animation-javascript/
 
 (function() {
   var COLORS, Confetti, NUM_CONFETTI, PI_2, canvas, confetti, context, drawCircle, i, range, resizeWindow, xpos;
