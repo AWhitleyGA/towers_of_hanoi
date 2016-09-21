@@ -195,20 +195,22 @@ var towers = {
       var medal;
       if(time <= 60) {
         medal = "gold";
+        message = $('<div class="notification-message"><img src="images/'+medal+'-medal.png"></div>');
       } else if (time <= 120) {
         medal = "silver";
+        message = $('<div class="notification-message"><img src="images/'+medal+'-medal.png"></div>');
       } else if (time <= 180) {
         medal = "bronze";
+        message = $('<div class="notification-message"><img src="images/'+medal+'-medal.png"></div>');
       } else {
-        medal = "none";
+        message = $('<div class="notification-message"></div>');
       };
-      message = $('<div class="notification-message"><img src="images/'+medal+'-medal.png"></div>');
       $('div.notification').append(message);
-      towers.timer();
-      time = 0;
-      if (medal = "gold") {
+      if (time <= 180) {
         $('canvas').show();
       };
+      towers.timer();
+      time = 0;
     }
   }
 };
