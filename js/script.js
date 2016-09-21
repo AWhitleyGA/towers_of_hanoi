@@ -206,7 +206,9 @@ var towers = {
       $('div.notification').append(message);
       towers.timer();
       time = 0;
-      $('canvas').show();
+      if (medal = "gold") {
+        $('canvas').show();
+      };
     }
   }
 };
@@ -276,7 +278,7 @@ startButton.on('click', function() {
 
   NUM_CONFETTI = 250;
 
-  COLORS = [[255, 225, 0], [50, 50, 50], [255, 225, 0], [255, 225, 0], [255, 225, 0]];
+  COLORS = [[255, 225, 0], [150, 150, 150], [255, 225, 0], [218, 165, 32], [218, 165, 32]];
 
   PI_2 = 2 * Math.PI;
 
