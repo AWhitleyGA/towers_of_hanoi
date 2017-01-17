@@ -127,8 +127,10 @@ div.disk {
 div.pointer {
   position: absolute;
   top: 0;
+  /*left: -20%;*/
   height: 100%;
   width: 100%;
+  button: 1;
   display: none;
 }
 img.selector-left {
@@ -145,7 +147,7 @@ img.selector-right {
   right: -30px;
   transform: rotate(90deg);
 }
-/*Classes defining disk position on poles */
+/*Classes defining disk position on poles (could be replaced in JS)*/
 div.level-one {
   bottom: 60%;
 }
@@ -161,7 +163,7 @@ div.level-four {
 div.level-five {
   bottom: 0%;
 }
-/*Classes defining width of each sized disk */
+/*Classes defining width of each sized disk (maybe replace with JS)*/
 div.size-one {
   width: 40%;
 }
